@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrolab: O Chamado do Propósito - Desbloqueie sua Vocação</title>
+    <style>
+        /* --- ESTILOS CSS --- */
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #1a1a2e; /* Fundo escuro místico */
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        #app-container {
+            background-color: #2a2a4a; /* Container em tom de noite estrelada */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(100, 100, 255, 0.4); /* Brilho místico */
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffd700; /* Dourado */
+            margin-bottom: 5px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            margin-bottom: 30px;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .section-header {
+            color: #87ceeb; /* Azul céu */
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #4a4a7a;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+            color: #b0e0e6;
+        }
+
+        input[type="date"], input[type="time"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #4a4a7a;
+            border-radius: 5px;
+            background-color: #3a3a6a;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        /* Estilo para as opções de resposta narrativa */
+        .question-card .option-label {
+            background-color: #3a3a6a;
+            border: 1px solid #5a5a8a;
+            color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: left;
+        }
+
+        .question-card .option-label:hover {
+            background-color: #4a4a7a;
+            border-color: #ffd700;
+        }
+        
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Botões */
+        #submit-button, #pay-button {
+            background-color: #ffd700;
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        #submit-button:hover, #pay-button:hover {
+            background-color: #e0b800;
+        }
+
+        /* Tela de Bloqueio */
+        #result-container {
+            margin-top: 30px;
+            padding: 30px;
+            border: 2px solid #dc3545; /* Vermelho/erro */
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+            background-color: #3a3a6a;
+        }
+
+        #lock-icon {
+            font-size: 3em;
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+
+        #result-title {
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        /* Estilo para o resultado da Amostra Grátis */
+        #free-sample-result {
+            border: 1px dashed #87ceeb;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            background-color: #20203a;
+            text-align: left;
+        }
+        
+        #final-result-area {
+            text-align: left;
+            margin-top: 30px;
+            padding: 25px;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            background-color: #20203a;
+            display: none;
+        }
+        
+        #final-result-area h3 {
+            color: #ffd700;
+            border-bottom: 1px solid #4a4a7a;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .result-block {
+            margin-bottom: 20px;
+        }
+        
+        .result-block strong {
+            color: #87ceeb;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <h1>Astrolab: O Chamado do Propósito</h1>
+        <p class="subtitle">Descubra sua vocação, essência e missão de alma.</p>
+
+        <!-- --- 1. COLETA DE DADOS ASTROLÓGICOS --- -->
+        <div id="data-collection">
+            <div class="section-header">Seu Nascimento</div>
+            <label for="birthDate">Data de Nascimento:</label>
+            <input type="date" id="birthDate" required>
+
+            <label for="birthTime">Hora de Nascimento (Opcional, mas Recomendado):</label>
+            <input type="time" id="birthTime">
+
+            <label for="birthCity">Cidade de Nascimento:</label>
+            <input type="text" id="birthCity" placeholder="Ex: São Paulo, SP" required>
+        </div>
+
+        <!-- --- 2. CHAMADO DA ALMA (Engajamento) --- -->
+        <div id="questions-area">
+            <!-- Conteúdo injetado pelo displayQuestions() -->
+        </div>
+
+        <button id="submit-button" onclick="handleTestSubmission()">Calcular e Ver Amostra Grátis</button>
+
+        <!-- --- 3. TELA DE BLOQUEIO / AMOSTRA GRÁTIS --- -->
+        <div id="result-container">
+            
+            <div id="free-sample-result">
+                <h3 style="color: #87ceeb; margin-top: 0;">🌟 Sua Amostra Grátis: O Propósito da Alma</h3>
+                <div class="result-block">
+                    <p style="margin-bottom: 5px;">Seu Destino (Nodo Norte) está em: <strong id="nn-sign">...</strong></p>
+                    <p id="nn-description" style="font-style: italic;"></p>
+                </div>
+            </div>
+
+            <div id="lock-icon">🔒</div>
+            <div id="result-title">Análise de Vocação e Essência Bloqueada</div>
+            
+            <p class="premium-text">
+                O cálculo do seu mapa está pronto! Para desvendar a análise completa do seu Propósito de Vida, Vocação e Caminho Profissional, é necessário o **Acesso Premium**.
+            </p>
+            
+            <button id="pay-button" onclick="redirectToPayment()">Desbloquear Análise Completa por R$ 39,90</button>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #aaa;">(Este é um link de simulação. Na versão real, ele leva você ao Gateway de Pagamento.)</p>
+        </div>
+
+        <!-- --- 4. RESULTADO FINAL (Desbloqueado após Pagamento) --- -->
+        <div id="final-result-area">
+            <h2 style="color: #ffd700;">✨ Sua Análise Astrológica Completa</h2>
+            
+            <div class="result-block">
+                <h3>O Propósito da Alma (Nodo Norte/Sul)</h3>
+                <p id="full-nn-ns"></p>
+            </div>
+
+            <div class="result-block">
+                <h3>A Vocação e a Expressão (Sol/Meio do Céu)</h3>
+                <p id="full-sun-mc"></p>
+            </div>
+
+            <div class="result-block">
+                <h3>Ação e Desafios Profissionais</h3>
+                <p id="full-vocational-areas"></p>
+            </div>
+            
+            <button id="new-test-button" onclick="location.reload()" style="margin-top: 20px; background-color: #87ceeb; color: #1a1a2e;">Fazer Novo Teste</button>
+        </div>
+    </div>
+
+    <script>
+        // ENDEREÇO DO SEU SERVIDOR BACKEND (onde o server.js está rodando)
+        const BACKEND_URL = '[https://assessoriahighlevel.com.br](https://assessoriahighlevel.com.br)'; 
+// As rotas da API (ex: /api/iniciar-teste) serão resolvidas automaticamente. 
+
+        // --- Variáveis de Estado (ligadas ao backend) ---
+        let currentSessionId = null;
+        
+        // --- FUNÇÕES DO FRONTEND ---
+
+        // Função para exibir as perguntas (conteúdo estático)
+        function displayQuestions() {
+            const questionsArea = document.getElementById('questions-area');
+            questionsArea.innerHTML = `
+                <div class="section-header">O Chamado da Alma</div>
+                
+                <div class="question-card">
+                    <p>1. O que te move quando ninguém está olhando?</p>
+                    <label class="option-label"><input type="radio" name="q1" value="a" required> A necessidade silenciosa de *transformar* o que está quebrado.</label>
+                    <label class="option-label"><input type="radio" name="q1" value="b"> A vontade de *cooperar* e manter a paz e a estabilidade.</label>
+                    <label class="option-label"><input type="radio" name="q1" value="c"> O desejo de *liderar* e ser reconhecido(a) por sua força individual.</label>
+                </div>
+
+                <div class="question-card">
+                    <p>2. Você se sente mais desafiado(a) a ter...</p>
+                    <label class="option-label"><input type="radio" name="q2" value="a" required> *Liberdade* de inovar e questionar sistemas.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="b"> *Estabilidade* de construir algo sólido e duradouro.</label>
+                </div>
+            `;
+        }
+
+        // 1. CHAMA O BACKEND PARA INICIAR O TESTE E RECEBER A AMOSTRA GRÁTIS
+        async function handleTestSubmission() {
+            // Verificação de preenchimento
+            const date = document.getElementById('birthDate').value;
+            const city = document.getElementById('birthCity').value;
+
+            if (!date || !city || !document.querySelector('input[name="q1"]:checked') || !document.querySelector('input[name="q2"]:checked')) {
+                alert("Por favor, preencha a data, cidade e as perguntas de alma.");
+                return;
+            }
+            
+            // Coleta de dados
+            const userData = {
+                date: date,
+                time: document.getElementById('birthTime').value,
+                city: city,
+                q1_answer: document.querySelector('input[name="q1"]:checked').value,
+                q2_answer: document.querySelector('input[name="q2"]:checked').value
+            };
+
+            try {
+                // Requisição ao servidor para iniciar a sessão
+                const response = await fetch(`${BACKEND_URL}/api/iniciar-teste`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
+                    currentSessionId = data.sessionId; // Salva o ID da sessão
+                    
+                    // Exibe a Amostra Grátis recebida do backend
+                    document.getElementById('nn-sign').textContent = data.amostra.sign.toUpperCase();
+                    document.getElementById('nn-description').textContent = data.amostra.description;
+                    
+                    // Bloqueia a visualização e mostra a tela de pagamento
+                    document.getElementById('data-collection').style.display = 'none';
+                    document.getElementById('questions-area').style.display = 'none';
+                    document.getElementById('submit-button').style.display = 'none';
+                    document.getElementById('result-container').style.display = 'block';
+
+                } else {
+                    alert('Erro ao iniciar a sessão: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Erro de conexão:', error);
+                alert('Erro de conexão ao comunicar com o servidor. Verifique se o server.js está rodando (node server.js).');
+            }
+        }
+
+        // 2. CHAMA O BACKEND PARA GERAR O LINK DE PAGAMENTO
+        async function redirectToPayment() {
+            if (!currentSessionId) {
+                alert("Erro de sessão. Tente novamente.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/gerar-pagamento`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentSessionId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // SIMULAÇÃO DO FLUXO DE PAGAMENTO:
+                    document.getElementById('pay-button').textContent = "Pagamento Iniciado...";
+                    document.getElementById('pay-button').disabled = true;
+                    
+                    // Para continuar a simulação, vamos chamar o webhook manualmente após um tempo:
+                    setTimeout(simulatePaymentConfirmation, 2000); 
+                    
+                } else {
+                    alert('Erro ao gerar pagamento: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro de conexão com a API de pagamento.');
+            }
+        }
+
+        // 3. FUNÇÃO QUE SIMULA O CHAMADO DO WEBHOOK APÓS O PAGAMENTO
+        async function simulatePaymentConfirmation() {
+            console.log("Simulando que o pagamento foi confirmado e o Webhook do Mercado Pago chamou o servidor...");
+            
+            // Chama o endpoint de webhook simulado no seu servidor
+            await fetch(`${BACKEND_URL}/api/webhook-simulado`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId: currentSessionId })
+            });
+            
+            // Após a confirmação, o frontend tenta buscar o resultado
+            checkAndDisplayResult();
+        }
+
+        // 4. CHAMA O BACKEND PARA VERIFICAR O STATUS E OBTER O RESULTADO COMPLETO
+        async function checkAndDisplayResult() {
+            const resultContainer = document.getElementById('result-container');
+            const payButton = document.getElementById('pay-button');
+            
+            // Feedback visual
+            resultContainer.querySelector('.premium-text').textContent = "Verificando confirmação de pagamento...";
+            payButton.disabled = true;
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/ver-resultado/${currentSessionId}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // Pagamento CONFIRMADO! Exibe o resultado.
+                    displayFinalResult(data.analise);
+                } else if (response.status === 403) {
+                    // Pagamento AINDA NÃO CONFIRMADO (Continua bloqueado)
+                    resultContainer.querySelector('.premium-text').textContent = "Pagamento ainda pendente. Tente verificar novamente em alguns segundos ou contate o suporte.";
+                    payButton.disabled = false;
+                    payButton.textContent = "Verificar Status / Pagar Novamente";
+                } else {
+                    alert('Erro ao buscar o resultado: ' + data.message);
+                    payButton.disabled = false;
+                    payButton.textContent = "Tentar Novamente";
+                }
+            } catch (error) {
+                console.error('Erro de conexão:', error);
+                alert('Erro de conexão ao buscar o resultado. O servidor pode ter caído.');
+                payButton.disabled = false;
+                payButton.textContent = "Tentar Novamente";
+            }
+        }
+
+        // 5. EXIBE O RESULTADO FINAL (Corrigido para lidar com Fallback e undefined)
+        function displayFinalResult(analiseData) {
+            const finalResultArea = document.getElementById('final-result-area');
+            
+            // Exibição da seção Propósito da Alma (nn_ns)
+            document.getElementById('full-nn-ns').innerHTML = `
+                <p style="font-style: italic; color: #aaa;">${analiseData.nn_ns}</p>
+            `;
+            
+            // Exibição da seção Vocação e Expressão (sun_mc)
+            document.getElementById('full-sun-mc').innerHTML = `
+                ${analiseData.sun_mc}
+            `;
+
+            // Exibição da seção Áreas Profissionais (vocational_areas)
+            document.getElementById('full-vocational-areas').innerHTML = analiseData.vocational_areas;
+
+            document.getElementById('result-container').style.display = 'none';
+            finalResultArea.style.display = 'block';
+        }
+
+        // --- INICIALIZAÇÃO ---
+        document.addEventListener('DOMContentLoaded', displayQuestions);
+    </script>
+</body>
+</html>
