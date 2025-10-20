@@ -321,8 +321,8 @@ app.get('/api/ver-resultado/:sessionId', (req, res) => {
 });
 
 
-// --- Inicialização do Servidor ---
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+// --- Inicialização do Servidor (VERSÃO CORRIGIDA) ---
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Servidor escutando na porta ${PORT}`);
     console.log('API pronta para receber dados do frontend (astrolab.html).');
 });
